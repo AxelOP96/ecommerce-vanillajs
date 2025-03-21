@@ -15,6 +15,18 @@ body{
 .center, h2, h3{
     text-align: center;
 }
+nav{
+    display: flex;
+    justify-content: end;
+}
+nav ul{
+    display: flex;
+    gap: 3rem;
+    font-size: large;
+}
+li{
+    cursor: pointer;
+}
 .products{
     width: 80%;
     margin: auto;
@@ -23,7 +35,7 @@ body{
     gap: 2rem;
 }
 .cards{
-    gap: 3rem;
+    gap: .5rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -31,14 +43,25 @@ body{
     background-color: rgb(193, 137, 246);
     width: 30%;
     border-radius: .5rem;
+    box-shadow: 1px 1px 1px rgb(63, 25, 57);
+}
+.cards:hover{
+    transform: scale(1.05);
+    background-color: rgb(186, 119, 248);
+    cursor: pointer;
 }
 .cards img{
     max-width: 200px;
     border-radius: .5rem;
     margin: auto;
+    max-height: 200px;
+    background-color: transparent;
 }
 .filter{
     display: flex;
+}
+li{
+    list-style: none;
 }
 #search{
     padding: 1rem 3rem;
@@ -51,4 +74,16 @@ body{
 }
 .none{
     display: none;
+}
+.cart{
+    background-color: rgb(250, 199, 250);
+    color: rgb(71, 29, 71);
+    border-radius: .5rem;
+    outline: none;
+    border: none;
+    font-weight: bold;
+    padding: .5rem;
+    width: 50%;
+    margin: auto;
+    cursor: pointer;
 }

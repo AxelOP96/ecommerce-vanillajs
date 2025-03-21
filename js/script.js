@@ -1,11 +1,6 @@
 const d = document;
 /**Consignas Principales
-Integración con API:
 
-Selecciona una API pública (por ejemplo, de productos, como la de OpenCommerce) y realiza una llamada para obtener una lista de productos. Asegúrate de manejar los errores adecuadamente.
-Mostrar Productos:
-
-Crea un componente en el HTML que muestre los productos obtenidos de la API en formato de tarjeta, incluyendo imagen, título, precio y una breve descripción.
 Carrito de Compras:
 
 Implementa una funcionalidad para añadir productos al carrito. Utiliza un array en JavaScript para almacenar los productos seleccionados.
@@ -76,7 +71,12 @@ d.addEventListener("DOMContentLoaded", (e)=>{
             products.forEach( pr =>{
                 const div = d.createElement("div");
                 
-                div.innerHTML += `<h2>${pr.title}</h2><img src="${pr.image}"><h3>${pr.category}</h3><h3>$ ${pr.price}</h3>`
+                div.innerHTML += `
+                <h2>${pr.title}</h2>
+                <img src="${pr.image}">
+                <h3>${pr.category}</h3>
+                <h3>$ ${pr.price}</h3>
+                <button class="cart">Agregar al carrito<span id="count"></span></button>`
                 div.classList.add("cards")
                 $products.appendChild(div);
             })
