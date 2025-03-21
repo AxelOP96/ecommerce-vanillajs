@@ -1,8 +1,5 @@
 const d = document;
 /**Consignas Principales
-Configuración del Proyecto:
-
-Crea la estructura básica de tu proyecto eCommerce, incluyendo archivos HTML, CSS y JS. Organiza tus carpetas de manera lógica.
 Integración con API:
 
 Selecciona una API pública (por ejemplo, de productos, como la de OpenCommerce) y realiza una llamada para obtener una lista de productos. Asegúrate de manejar los errores adecuadamente.
@@ -67,6 +64,7 @@ Estas consignas deberían proporcionarte una base sólida para desarrollar tu pr
 
  */
 const $products = d.querySelector(".products");
+const $search = d.getElementById("search");
 
 d.addEventListener("DOMContentLoaded", (e)=>{
     fetch('https://fakestoreapi.com/products')
@@ -77,10 +75,23 @@ d.addEventListener("DOMContentLoaded", (e)=>{
             
             products.forEach( pr =>{
                 const div = d.createElement("div");
-                console.log(pr)
+                
                 div.innerHTML += `<h2>${pr.title}</h2><img src="${pr.image}"><h3>${pr.category}</h3><h3>$ ${pr.price}</h3>`
                 div.classList.add("cards")
                 $products.appendChild(div);
             })
         }
+})
+
+d.addEventListener("input", (e)=>{
+    if(e.target === $search){
+        const $h2 = d.querySelectorAll("h2");
+        $h2.forEach( title =>{
+            if(!title.textContent.toLowerCase().includes(`${$search.value.toLowerCase()}`)){
+                title.parentElement.classList.add("none");
+            }else{
+                title.parentElement.classList.remove("none");
+            }
+        })
+    }
 })
