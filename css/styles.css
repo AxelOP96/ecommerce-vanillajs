@@ -1,0 +1,11 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+.header{
+    background-color: rgb(248, 214, 152);
+    padding: 1rem 2rem;
+}
+.center{
+    text-align: center;
+}
