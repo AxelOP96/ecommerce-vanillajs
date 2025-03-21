@@ -87,3 +87,20 @@ li{
     margin: auto;
     cursor: pointer;
 }
+.fav{
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: rgb(250, 199, 250);
+    border-radius: 50%;
+    padding: .25rem;
+
+}
+.fav:hover{
+    background-color: rgb(71, 29, 71);
+    color: rgb(250, 199, 250);
+}
+.cards div{
+    display: flex;
+    justify-content: space-evenly;
+}

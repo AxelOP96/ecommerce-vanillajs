@@ -58,7 +58,7 @@ Estas consignas deberían proporcionarte una base sólida para desarrollar tu pr
 
 
  */
-const $favourites = [];
+const $favourites = new Set();
 const $carrito = [];
 const $products = d.querySelector(".products");
 const $search = d.getElementById("search");
@@ -66,6 +66,7 @@ const $sectionFavourites = d.querySelector(".favourites");
 const $number = d.getElementById("number");
 
 d.addEventListener("DOMContentLoaded", (e)=>{
+    localStorage.getItem("productos")
     if($number.textContent == ""){
         $number.textContent = parseInt(0);
     }
@@ -87,10 +88,11 @@ d.addEventListener("DOMContentLoaded", (e)=>{
             })
             const $count = d.querySelector("#count");
             const $favs = d.querySelectorAll(".fav");
+            console.log($favs)
             const $carts = d.querySelectorAll(".cart")
             editarEstadoFavs($favs);
             agregadoACarrito($carts)
-            localStorage.getItem("productos")
+            
         }
         
 })
@@ -110,22 +112,24 @@ d.addEventListener("input", (e)=>{
 
 function editarEstadoFavs(favs){
     d.addEventListener("click", (e)=>{
+        
         favs.forEach((fav) =>{
             if(e.target === fav){
-                $favourites.push(fav.parentElement.getAttribute("id").substring(8))
-                console.log($favourites)
+                $favourites.add(Number(fav.parentElement.getAttribute("id").substring(8)));
+                
                 fetch('https://fakestoreapi.com/products')
                     .then(response => response.json())
-                    .then(data => renderFavs(data, $favourites));
+                    .then(data => renderFavs(data, [...$favourites]));
             } 
         })
         //Establecemos que va a renderizar con el click, pero despues con el domcontentloaded deberia traer los ya guardados con localstorage
         //favourites seria todos los datos, deberia compararlos con los id de $favourites
         //console.log($favourites[0].substring(8))
         function renderFavs(data, favourites){
+            const $fragment = d.createDocumentFragment();
             data.forEach( (el, index)=>{
                 const div = d.createElement("div");
-                if(favourites[index].includes(el.id)){
+                if(favourites.includes(el.id)){
                     div.innerHTML += `
                     <h2>${el.title}</h2>
                     <img src="${el.image}">
@@ -133,27 +137,21 @@ function editarEstadoFavs(favs){
                     <div id="product-${el.id}"><h3>$ ${el.price}</h3><button class="fav">💜</button></div>
                     <button class="cart">Agregar al carrito<span id="count"></span></button>`
                 div.classList.add("cards")
-                $sectionFavourites.appendChild(div);
+                $fragment.appendChild(div);
+                console.log(favourites)
                 }
             })
+            
+            $sectionFavourites.appendChild($fragment);
         }
     }) 
 }
 function agregadoACarrito(btnCarritos){
     d.addEventListener("click", (e)=>{
-        
         btnCarritos.forEach( (btnCart) =>{
-            if(e.target === btnCart) $number.textContent = parseInt($number.textContent)+1;//$carrito.push()
+            if(e.target === btnCart) $number.textContent = parseInt($number.textContent)+1;
         })
         
     })
     localStorage.setItem("productos",$number.textContent)
-}
-function contador(counts){
-    
-
-
-
-
-    
 }
