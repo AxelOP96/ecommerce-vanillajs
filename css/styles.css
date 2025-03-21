@@ -9,20 +9,28 @@
 body{
     background-color: rgb(250, 199, 250);
 }
-.center{
+.center, h2, h3{
     text-align: center;
 }
 .products{
     width: 80%;
     margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
 }
 .cards{
     gap: 3rem;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     padding: 2rem;
+    background-color: blueviolet;
+    width: 30%;
+    border-radius: .5rem;
 }
 .cards img{
     max-width: 200px;
     border-radius: .5rem;
+    margin: auto;
 }

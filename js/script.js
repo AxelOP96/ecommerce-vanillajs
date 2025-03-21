@@ -73,13 +73,12 @@ d.addEventListener("DOMContentLoaded", (e)=>{
         .then(response => response.json())
         .then(data => renderProducts(data));
 
-        
         function renderProducts( products){
-            console.log(products)
-            const div = d.createElement("div");
+            
             products.forEach( pr =>{
+                const div = d.createElement("div");
                 console.log(pr)
-                div.innerHTML += `<img src="${pr.image}">`
+                div.innerHTML += `<h2>${pr.title}</h2><img src="${pr.image}"><h3>${pr.category}</h3><h3>$ ${pr.price}</h3>`
                 div.classList.add("cards")
                 $products.appendChild(div);
             })
