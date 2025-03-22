@@ -88,11 +88,9 @@ d.addEventListener("DOMContentLoaded", (e)=>{
             })
             const $count = d.querySelector("#count");
             const $favs = d.querySelectorAll(".fav");
-            console.log($favs)
             const $carts = d.querySelectorAll(".cart")
             editarEstadoFavs($favs);
             agregadoACarrito($carts)
-            
         }
         
 })
@@ -115,11 +113,14 @@ function editarEstadoFavs(favs){
         
         favs.forEach((fav) =>{
             if(e.target === fav){
-                $favourites.add(Number(fav.parentElement.getAttribute("id").substring(8)));
-                
-                fetch('https://fakestoreapi.com/products')
-                    .then(response => response.json())
-                    .then(data => renderFavs(data, [...$favourites]));
+                const productId = Number(fav.parentElement.getAttribute("id").substring(8));   
+                if (!$favourites.has(productId)) {
+                    $favourites.add(productId);
+                        
+                    fetch('https://fakestoreapi.com/products')
+                        .then(response => response.json())
+                        .then(data => renderFavs(data, [...$favourites]));
+                }  
             } 
         })
         //Establecemos que va a renderizar con el click, pero despues con el domcontentloaded deberia traer los ya guardados con localstorage
@@ -129,6 +130,7 @@ function editarEstadoFavs(favs){
             const $fragment = d.createDocumentFragment();
             data.forEach( (el, index)=>{
                 const div = d.createElement("div");
+                
                 if(favourites.includes(el.id)){
                     div.innerHTML += `
                     <h2>${el.title}</h2>
@@ -136,13 +138,16 @@ function editarEstadoFavs(favs){
                     <h3>${el.category}</h3>
                     <div id="product-${el.id}"><h3>$ ${el.price}</h3><button class="fav">💜</button></div>
                     <button class="cart">Agregar al carrito<span id="count"></span></button>`
-                div.classList.add("cards")
-                $fragment.appendChild(div);
-                console.log(favourites)
+                    div.classList.add(`cards`,`${index}`);
+                    $fragment.appendChild(div);
                 }
+                
             })
-            
+            const $favcards = d.querySelectorAll(".favourites .cards");
+            //console.log($favcards)
+            eliminarCardsRepetidas($favcards)
             $sectionFavourites.appendChild($fragment);
+            
         }
     }) 
 }
@@ -155,3 +160,35 @@ function agregadoACarrito(btnCarritos){
     })
     localStorage.setItem("productos",$number.textContent)
 }
+/* function eliminarCardsRepetidas($favcards){
+    let indices = [];
+    
+    $favcards.forEach( (card, index)=>{
+        for(let i=0;i<$favcards.length;i++){
+            if(card.classList.contains(`${i+1}`)){
+                indices.push(i+1);
+            }
+        }
+        console.log(card)
+        //tomar el indice y si se repite dos veces o mas borrar
+        let contador =0;
+        
+    })
+} */
+    function eliminarCardsRepetidas($favcards) {
+        const counts = {};
+        $favcards.forEach(card => {
+            const className = Array.from(card.classList).find(cls => !isNaN(cls)); 
+            if (className) {
+                counts[className] = (counts[className] || 0) + 1;
+            }
+        });
+    
+        $favcards.forEach(card => {
+            const className = Array.from(card.classList).find(cls => !isNaN(cls));
+            if (className && counts[className] > 1) {
+                card.classList.add('none') ;
+            }
+        });
+    }
+    
