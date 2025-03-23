@@ -106,5 +106,30 @@ li{
 }
 .favourites{
     display: flex;
-    
+
+}
+
+@media (max-width: 400px) {
+    .header, ul{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    nav ul{
+        gap: .5rem
+    }
+    .header{
+        justify-content: center;
+        align-items: center;
+    }
+    .products{
+        flex-direction: column;
+        max-width: 70%;
+    }
+    .cards{
+        width: 100%;
+    }
+    #search{
+        padding: .4rem;
+    }
 }
