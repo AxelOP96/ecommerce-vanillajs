@@ -64,6 +64,8 @@ const $products = d.querySelector(".products");
 const $search = d.getElementById("search");
 const $sectionFavourites = d.querySelector(".favourites");
 const $number = d.getElementById("number");
+const $goHome = d.getElementById("goHome"),
+$goFavs = d.getElementById("goFavs");
 
 d.addEventListener("DOMContentLoaded", (e)=>{
     localStorage.getItem("productos")
@@ -191,4 +193,13 @@ function agregadoACarrito(btnCarritos){
             }
         });
     }
-    
+d.addEventListener("click", (e)=>{
+    if(e.target === $goFavs){
+        $products.classList.add("none");
+        $sectionFavourites.classList.remove("none")
+    }
+    if(e.target === $goHome){
+        $products.classList.remove("none");
+        $sectionFavourites.classList.add("none");
+    }
+})
